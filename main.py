@@ -10,6 +10,7 @@ DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 # False display Mandelbrot image on e-Paper display
 # True display Mandelbrot image on computer monitor / Raspberry Pi monitor
 DEBUG = True
+# DEBUG = False
 
 if not DEBUG:
     from omni_epd import displayfactory, EPDNotFoundError
