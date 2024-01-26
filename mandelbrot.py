@@ -68,16 +68,16 @@ class Mandelbrot:
 
     def zoom_on_interesting_area(self):
         choices = []
-        # Upper left
+        # Upper left quadrant
         uniformness = self.get_uniformness_of_area(self.rendered_res_x / 2, self.rendered_res_y / 2, 0, 0, 2, 2)
         choices += [(self.x-self.w/4, self.y+self.h/4, uniformness)]
-        # Upper right
+        # Upper right quadrant
         uniformness = self.get_uniformness_of_area(self.rendered_res_x / 2, self.rendered_res_y / 2, self.rendered_res_x / 2, 0, 2, 2)
         choices += [(self.x+self.w/4, self.y+self.h/4, uniformness)]
-        # Lower left
+        # Lower left quadrant
         uniformness = self.get_uniformness_of_area(self.rendered_res_x / 2, self.rendered_res_y / 2, 0, self.rendered_res_y / 2, 2, 2)
         choices += [(self.x-self.w/4, self.y-self.h/4, uniformness)]
-        # Lower right
+        # Lower right quadrant
         uniformness = self.get_uniformness_of_area(self.rendered_res_x / 2, self.rendered_res_y / 2, self.rendered_res_x / 2, self.rendered_res_y / 2, 2, 2)
         choices += [(self.x + self.w / 4, self.y - self.h / 4, uniformness)]
 
