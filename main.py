@@ -1,3 +1,4 @@
+# comment added 01/28
 from typing import Self
 from mandelbrot import Mandelbrot
 from PIL import Image as im
