@@ -1,14 +1,16 @@
-from mandelbrot import Mandelbrot
 from PIL import Image as im
 import numpy as np
 import sys
+from mandelbrot import Mandelbrot
+# from PIL import Image as im
+
 
 # Set to the name of your e-ink device (https://github.com/robweber/omni-epd#displays-implemented)
 DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 
 # Disable when running the waveshare panel
-DEBUG = False
-
+# DEBUG = False
+DEBUG = True      # run on computer
 if not DEBUG:
     from omni_epd import displayfactory, EPDNotFoundError
 
