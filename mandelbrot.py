@@ -26,7 +26,7 @@ class Mandelbrot:
     def render(self, res_x, res_y):
         # Approximation for number of iterations
         iter = int(50 + max(0,-Decimal.log10(self.w)) * 100)
-
+        print("iter", iter)
         # Updates precision
         getcontext().prec = int(max(0,-Decimal.log10(self.w))+8)
 
@@ -37,10 +37,9 @@ class Mandelbrot:
             for x_offset_i in range(0, res_x):
                 p_x = self.x - self.w / Decimal(2) + Decimal(x_offset_i) / Decimal(res_x) * self.w
                 p_y = self.y - self.h / Decimal(2) + Decimal(y_offset_i) / Decimal(res_y) * self.h
-
+                print(p_x)
                 row += [self.mandel_point(p_x, p_y, iter)]
             columns += [row]
-
 
         self.rendered_res_x = res_x
         self.rendered_res_y = res_y
@@ -68,16 +67,16 @@ class Mandelbrot:
 
     def zoom_on_interesting_area(self):
         choices = []
-        # Upper left
+        # Upper left quadrant
         uniformness = self.get_uniformness_of_area(self.rendered_res_x / 2, self.rendered_res_y / 2, 0, 0, 2, 2)
         choices += [(self.x-self.w/4, self.y+self.h/4, uniformness)]
-        # Upper right
+        # Upper right quadrant
         uniformness = self.get_uniformness_of_area(self.rendered_res_x / 2, self.rendered_res_y / 2, self.rendered_res_x / 2, 0, 2, 2)
         choices += [(self.x+self.w/4, self.y+self.h/4, uniformness)]
-        # Lower left
+        # Lower left quadrant
         uniformness = self.get_uniformness_of_area(self.rendered_res_x / 2, self.rendered_res_y / 2, 0, self.rendered_res_y / 2, 2, 2)
         choices += [(self.x-self.w/4, self.y-self.h/4, uniformness)]
-        # Lower right
+        # Lower right quadrant
         uniformness = self.get_uniformness_of_area(self.rendered_res_x / 2, self.rendered_res_y / 2, self.rendered_res_x / 2, self.rendered_res_y / 2, 2, 2)
         choices += [(self.x + self.w / 4, self.y - self.h / 4, uniformness)]
 
@@ -87,7 +86,8 @@ class Mandelbrot:
         # Filter out completely uniform squares
         choices = [x for x in choices if x[2]<4]
         # Filter out squares that have 2 or more uniform squares
-        less_uniform_choices = [x for x in choices if x[2]<3]
+        #  less_uniform_choices = [x for x in choices if x[2]<3]
+        less_uniform_choices = choices
         if len(less_uniform_choices) != 0:
             self.x, self.y, u = random.choice(less_uniform_choices)
         else:
