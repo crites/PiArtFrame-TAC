@@ -9,8 +9,7 @@ DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 #
 # Disable when running the waveshare panel
 # DEBUG = True display Mandelbrot image on Raspberry Pi monitor
-# DEBUG = True
-DEBUG = False
+DEBUG = True
 
 if not DEBUG:
     from omni_epd import displayfactory, EPDNotFoundError
