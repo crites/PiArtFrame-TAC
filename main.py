@@ -1,11 +1,9 @@
 # comment added 01/28
-from typing import Self
 from mandelbrot import Mandelbrot
 from PIL import Image as im
 import numpy as np
 import sys
-from mandelbrot import Mandelbrot
-# from PIL import Image as im
+
 
 
 # Set to the name of your e-ink device (https://github.com/robweber/omni-epd#displays-implemented)
@@ -42,7 +40,8 @@ if not DEBUG:
 while True:                                         # Start of infinite loop
     print("Starting render...")                     #  prints a message indicating the start of the rendering process.
     mandelbrot.render(WIDTH,HEIGHT)                 # Generate an image of the Mandelbrot set
-    print("Done!", Self.x)                          # signals the completion of the rendering process.
+    # Report the current X coordinate after rendering
+    print("Done!", mandelbrot.x)                    # signals the completion of the rendering process.
     arr = mandelbrot.get_render()                   # retrieves the rendered data from the mandelbrot object.
     arr = (np.asarray(arr)*255).astype(np.uint8)    # converts the rendered data to a NumPy array, scales the values (possibly for contrast adjustment), 
                                                     # and casts them to 8-bit unsigned integers, a common format for image data
