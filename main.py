@@ -5,12 +5,11 @@ import numpy as np
 import sys
 
 
-
+# New comment line
 # Set to the name of your e-ink device (https://github.com/robweber/omni-epd#displays-implemented)
 DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 
-#
-# Disable when running the waveshare panel
+    # Disable when running the waveshare panel 
 # False display Mandelbrot image on e-Paper display
 # True display Mandelbrot image on computer monitor / Raspberry Pi monitor
 DEBUG = True
