@@ -5,7 +5,7 @@ import numpy as np
 import sys
 
 
-
+# comment added 01/26
 # Set to the name of your e-ink device (https://github.com/robweber/omni-epd#displays-implemented)
 DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 
