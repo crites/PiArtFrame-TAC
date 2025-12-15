@@ -9,6 +9,8 @@ import sys
 # Set to the name of your e-ink device (https://github.com/robweber/omni-epd#displays-implemented)
 DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 
+# VS Code is cool!
+# Git is pretty cool!
 # new comment 12/15/2025
 # Comment change
 # Disable when running the waveshare panel
