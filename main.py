@@ -9,7 +9,7 @@ import sys
 # Set to the name of your e-ink device (https://github.com/robweber/omni-epd#displays-implemented)
 DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 
-# VS Code is cool!
+# VS Code is cool!!
 # Git is pretty cool!
 # new comment 12/15/2025
 # Comment change
@@ -18,7 +18,8 @@ DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 # True display Mandelbrot image on computer monitor / Raspberry Pi monitor
 DEBUG = False
 # DEBUG = False  01/26 test change 938
-
+#
+#
 if not DEBUG:       from omni_epd import displayfactory, EPDNotFoundError
 
 mandelbrot = Mandelbrot()
