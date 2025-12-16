@@ -1,12 +1,13 @@
 # comment added 01/28
-from mandelbrot import Mandelbrot
-from PIL import Image as im
-import numpy as np
 import sys
 
+import numpy as np
+from PIL import Image as im
 
+from mandelbrot import Mandelbrot
 
-# Set to the name of your e-ink device (https://github.com/robweber/omni-epd#displays-implemented)
+# Set to the name of your e-ink device
+# See: https://github.com/robweber/omni-epd#displays-implemented
 DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 
 # VS Code is cool!!
@@ -20,7 +21,8 @@ DEBUG = True
 # DEBUG = False  01/26 test change 938
 #
 #
-if not DEBUG:       from omni_epd import displayfactory, EPDNotFoundError
+if not DEBUG:
+    from omni_epd import EPDNotFoundError, displayfactory
 
 if __name__ == "__main__":
     mandelbrot = Mandelbrot()
@@ -42,28 +44,30 @@ if __name__ == "__main__":
         epd.clear()
         epd.sleep()
 
-    while True:                                         # Start of infinite loop
-        print("Starting render...")                     #  prints a message indicating the start of the rendering process.
-        mandelbrot.render(WIDTH,HEIGHT)                 # Generate an image of the Mandelbrot set
+    while True:  # Start of infinite loop
+        # Print that a render is starting
+        print("Starting render...")
+        mandelbrot.render(WIDTH, HEIGHT)  # Generate an image of the Mandelbrot set
         # Report the current X coordinate after rendering
-        print("Done!", mandelbrot.x)                    # signals the completion of the rendering process.
-        arr = mandelbrot.get_render()                   # retrieves the rendered data from the mandelbrot object.
-        arr = (np.asarray(arr)*255).astype(np.uint8)    # converts the rendered data to a NumPy array, scales the values (possibly for contrast adjustment), 
-                                                        # and casts them to 8-bit unsigned integers, a common format for image data
-        image = im.fromarray(arr)                       # creates an image from the NumPy array
+        print("Done!", mandelbrot.x)  # signals the completion of the rendering process.
+        # Get the rendered array and convert to 8-bit image data
+        arr = mandelbrot.get_render()
+        arr = (np.asarray(arr) * 255).astype(np.uint8)
+        image = im.fromarray(arr)  # creates an image from the NumPy array
         # Save the image as BMP
-        image = image.convert("1")                      # converts the image to a 1-bit pixel format, suitable for black-and-white displays, like e-paper.
+        # Convert to 1-bit pixels for e-paper displays
+        image = image.convert("1")
 
         if DEBUG:
-            image.show()                                # If so, the image is displayed directly (probably on a standard computer screen).
-        else:                       
+            image.show()  # If so, the image is displayed directly (probably on a standard computer screen).
+        else:
             epd.prepare()
             epd.clear()
             epd.display(image)
             epd.sleep()
 
-        mandelbrot.zoom_on_interesting_area()     #object that modifies its state to zoom into a specific area of the Mandelbrot set, possibly to display more 
-                                                  # interesting or detailed fractal patterns in subsequent renders.
+        mandelbrot.zoom_on_interesting_area()  # object that modifies its state to zoom into a specific area of the Mandelbrot set, possibly to display more
+        # interesting or detailed fractal patterns in subsequent renders.
 
         # When debugging, run just once
         if DEBUG:
