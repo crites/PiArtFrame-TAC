@@ -1,4 +1,4 @@
-from decimal import *
+from decimal import Decimal, getcontext, localcontext
 import random
 from tqdm import tqdm
 
@@ -13,33 +13,37 @@ class Mandelbrot:
         self.rendered_res_y = 0
 
     def mandel_point(self, C_x, C_y, iter):
-        Z_x = C_x
-        Z_y = C_y
-        for i in range(0, iter):
+        # Standard Mandelbrot iteration: Z_0 = 0, Z_{n+1} = Z_n^2 + C
+        Z_x = Decimal(0)
+        Z_y = Decimal(0)
+        for i in range(iter):
             Z_x_old = Z_x
             Z_x = Z_x * Z_x - Z_y * Z_y + C_x
-            Z_y = 2 * Z_x_old * Z_y + C_y
-            if (Z_x ** 2 + Z_y ** 2) > 4:
+            Z_y = Decimal(2) * Z_x_old * Z_y + C_y
+            if (Z_x * Z_x + Z_y * Z_y) > Decimal(4):
                 return 1
         return 0
 
     def render(self, res_x, res_y):
         # Approximation for number of iterations
-        iter = int(50 + max(0,-Decimal.log10(self.w)) * 100)
-        print("iter", iter)
-        # Updates precision
-        getcontext().prec = int(max(0,-Decimal.log10(self.w))+8)
+        try:
+            scale = -self.w.log10()
+        except Exception:
+            scale = Decimal(0)
+        iter_count = int(50 + max(0, scale) * Decimal(100))
 
+        # Use a local decimal context for precision during rendering
+        desired_prec = int(max(0, scale) + 8)
         columns = []
-
-        for y_offset_i in tqdm(range(res_y, 0, -1)):
-            row = []
-            for x_offset_i in range(0, res_x):
-                p_x = self.x - self.w / Decimal(2) + Decimal(x_offset_i) / Decimal(res_x) * self.w
-                p_y = self.y - self.h / Decimal(2) + Decimal(y_offset_i) / Decimal(res_y) * self.h
-                print(p_x)
-                row += [self.mandel_point(p_x, p_y, iter)]
-            columns += [row]
+        with localcontext() as ctx:
+            ctx.prec = desired_prec
+            for y_offset_i in tqdm(range(res_y, 0, -1)):
+                row = []
+                for x_offset_i in range(0, res_x):
+                    p_x = self.x - self.w / Decimal(2) + Decimal(x_offset_i) / Decimal(res_x) * self.w
+                    p_y = self.y - self.h / Decimal(2) + Decimal(y_offset_i) / Decimal(res_y) * self.h
+                    row.append(self.mandel_point(p_x, p_y, iter_count))
+                columns.append(row)
 
         self.rendered_res_x = res_x
         self.rendered_res_y = res_y
