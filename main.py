@@ -16,7 +16,7 @@ DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 # Disable when running the waveshare panel
 # False display Mandelbrot image on e-Paper display
 # True display Mandelbrot image on computer monitor / Raspberry Pi monitor
-DEBUG = False
+DEBUG = True
 # DEBUG = False  01/26 test change 938
 #
 #
